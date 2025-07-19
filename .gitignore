@@ -1,4 +1,55 @@
 # Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Python virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# VSCode and IDE settings
+.vscode/
+.idea/
+
+# Mac and system files
+.DS_Store
+Thumbs.db
+
+# Data files
+*.csv
+*.xlsx
+*.tsv
+*.parquet
+*.feather
+*.zip
+*.gz
+*.tar
+data/
+job_dataset_cleaned.csv
+
+# Model files
+*.pkl
+*.joblib
+models/
+model_output/
+
+# Logs and outputs
+*.log
+*.out
+*.tmp
+
+# Streamlit and cache
+.streamlit/
+.streamlit/cache/
+**/__pycache__/
+
+
 __pycache__/
 *.py[codz]
 *$py.class
