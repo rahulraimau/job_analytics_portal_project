@@ -24,7 +24,7 @@ https://jobanalyticsappproject-3g6jw7wpfjsch4d8d5hjup.streamlit.app/
 
 https://jobanalytics1.netlify.app/
 
-
+https://public.tableau.com/views/Book1_17528692174990/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
 
 
