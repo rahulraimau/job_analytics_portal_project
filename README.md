@@ -22,6 +22,10 @@ Dataset-https://www.kaggle.com/datasets/ravindrasinghrana/job-description-datase
 https://jobanalyticsappproject-3g6jw7wpfjsch4d8d5hjup.streamlit.app/
 
 
+https://jobanalytics1.netlify.app/
+
+
+
 
 
 🔗 [Streamlit App](https://job-analytics.streamlit.app) *(Update link if different)*
