@@ -5,7 +5,7 @@ A complete data science project that analyzes job market trends and predicts job
 ![Streamlit](https://img.shields.io/badge/Deployed%20on-Streamlit-0099ff?logo=streamlit)
 
 ---
-
+Dataset-https://www.kaggle.com/datasets/ravindrasinghrana/job-description-dataset
 ## 📊 Features
 
 - Job role prediction from skills using ML
