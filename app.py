@@ -9,16 +9,75 @@ import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
+import os
+import gdown
 
-# Get current time in IST (India Standard Time)
+st.set_page_config(page_title="Job Analytics & Role Prediction Portal", layout="wide")
+
+# Google Drive file ID and file name
+FILE_ID = "1PkoSQN7dxddV10Fq2xmmsGCkitmVnnO9"
+FILE_NAME = "job_dataset_cleaned.csv"
+
+@st.cache_data
+def download_and_load_data():
+    if not os.path.exists(FILE_NAME):
+        gdown.download(f"https://drive.google.com/uc?id={FILE_ID}", FILE_NAME, quiet=False)
+    df = pd.read_csv(FILE_NAME)
+    df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
+    return df
+
+# Check if current time is between 3PM and 5PM IST
 def is_between_3pm_to_5pm_ist():
     ist = pytz.timezone("Asia/Kolkata")
     now = datetime.now(ist)
-    return now.hour >= 15 and now.hour < 17
+    return 15 <= now.hour < 17
 
-# Load dataset
-df = pd.read_csv("job_dataset_cleaned.csv")
+# Title
+st.title("📊 Job Analytics & Role Prediction Portal")
 
+# Load data
+try:
+    df = download_and_load_data()
+    st.success("Dataset loaded successfully!")
+except Exception as e:
+    st.error(f"Failed to load dataset: {e}")
+    st.stop()
+
+# Display dataset preview
+with st.expander("🔍 Dataset Preview"):
+    st.dataframe(df.head(20))
+
+# Show analytics if in time window
+if is_between_3pm_to_5pm_ist():
+    st.info("⏰ Real-time Graph Display Enabled (3PM to 5PM IST)")
+    fig, ax = plt.subplots()
+    top_roles = df['job_role'].value_counts().head(10)
+    sns.barplot(y=top_roles.index, x=top_roles.values, ax=ax)
+    ax.set_title("Top 10 Job Roles")
+    ax.set_xlabel("Count")
+    ax.set_ylabel("Job Role")
+    st.pyplot(fig)
+else:
+    st.warning("Graphs will be available from 3PM to 5PM IST.")
+
+# Role prediction model placeholder
+st.header("🔮 Predict Job Role From Description")
+user_input = st.text_area("Paste Job Description Here")
+
+if st.button("Predict"):
+    try:
+        # Load model and vectorizer
+        model = joblib.load("logreg_model.pkl")
+        vectorizer = joblib.load("vectorizer.pkl")
+        encoder = joblib.load("label_encoder.pkl")
+
+        X_input = vectorizer.transform([user_input])
+        pred = model.predict(X_input)
+        role = encoder.inverse_transform(pred)[0]
+        st.success(f"Predicted Job Role: **{role}**")
+
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
 # Clean column names
 df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
 
