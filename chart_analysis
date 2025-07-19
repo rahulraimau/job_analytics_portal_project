@@ -1,0 +1,109 @@
+📊 Chart 1: Top 5 Roles in 2023 (Intern + Account Director @ <2M Companies)
+🔍 Filters Applied:
+Year = 2023
+
+Work Type = Intern
+
+Job Title = Account Director
+
+Company Size < 2 Million
+
+🧠 Chart Logic:
+
+df1 = df[
+    (df['year'] == 2023) &
+    (df['work_type'] == 'Intern') &
+    (df['job_title'] == 'Account Director') &
+    (df['company_size'] < 2_000_000)
+]
+top_roles = df1['role'].value_counts().nlargest(5)
+st.bar_chart(top_roles)
+✅ Answer Summary:
+This chart highlights the Top 5 Roles most frequently offered under internship contracts in 2023 to candidates with the job title Account Director at startups or small companies (less than 2M in size). It helps identify the most demanded roles within limited-scale organizations seeking entry-level leadership talent.
+
+📊 Chart 2: Top 10 Companies Hiring Female Data Engineers with Job Title "Data Scientist" (Time-Sensitive)
+🔍 Filters Applied:
+Role = Data Engineer
+
+Job Title = Data Scientist
+
+Qualification = B.Tech only
+
+Gender = Female
+
+Exclude Asian countries
+
+Exclude countries starting with 'C'
+
+Latitude ≥ 10
+
+Job Posting Date: 01-Jan-2023 to 01-Jun-2023
+
+🕒 Show Chart Only Between 3 PM – 5 PM IST
+
+if time(15, 0) <= now_ist <= time(17, 0):
+    # chart rendering code here
+🧠 Chart Logic:
+
+df2 = df[
+    (df['role'] == 'Data Engineer') &
+    (df['job_title'] == 'Data Scientist') &
+    (df['qualification'] == 'B.Tech') &
+    (df['preference'] == 'Female') &
+    (~df['country'].isin(asian_countries)) &
+    (~df['country'].str.startswith('C')) &
+    (df['latitude'] >= 10) &
+    (df['date_posted'].between('2023-01-01', '2023-06-01'))
+]
+top_companies = df2['company_name'].value_counts().nlargest(10)
+st.bar_chart(top_companies)
+✅ Answer Summary:
+This chart displays the Top 10 non-Asian companies (excluding those starting with 'C') that hired female B.Tech graduates for roles combining Data Engineering and Data Science within early 2023. It’s visible only during 3–5PM IST, ensuring time-specific insights are emphasized during ideal usage periods.
+
+📊 Chart 3: Company Size vs Name for Male Mechanical Engineers (Time-Sensitive)
+🔍 Filters Applied:
+Job Title = Mechanical Engineer
+
+Experience > 5 years
+
+Country ∈ Asian countries
+
+Salary > $50,000
+
+Work Type = Full Time / Part Time only
+
+Gender = Male
+
+Applied Via = Idealist
+
+Company Size < 50,000
+
+🕒 Show Chart Only Between 3 PM – 5 PM IST
+
+if time(15, 0) <= now_ist <= time(17, 0):
+    # chart rendering code here
+🧠 Chart Logic:
+
+df3 = df[
+    (df['job_title'] == 'Mechanical Engineer') &
+    (df['experience_years'] > 5) &
+    (df['country'].isin(asian_countries)) &
+    (df['salary'] > 50000) &
+    (df['work_type'].isin(['Part Time', 'Full Time'])) &
+    (df['preference'] == 'Male') &
+    (df['applied_via'] == 'Idealist') &
+    (df['company_size'] < 50000)
+]
+st.bar_chart(df3[['company_name', 'company_size']].set_index('company_name'))
+✅ Answer Summary:
+This chart displays Asian companies with <50,000 employees that hire experienced (5+ yrs) male mechanical engineers with strong salary packages through Idealist. The chart helps reveal high-quality opportunities in both full-time and part-time roles. Visible only from 3–5PM IST to restrict focus to core analysis hours.
+
+🧾 Optional Notes for Report:
+All charts follow complex business logic combining multiple filters (role, gender, country, salary, etc.)
+
+Time-based conditions ensure dashboard relevance during usage windows
+
+Useful for diversity tracking, regional hiring patterns, and salary benchmarking
+
+Designed for real-time Streamlit dashboards with smart filtering
+
